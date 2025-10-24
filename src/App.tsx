@@ -1,21 +1,28 @@
+import { Outlet, Route, Routes } from "react-router";
 import "./App.css";
-import { Button } from "./components/ui/button";
-import { cn } from "./lib/utils";
+import IndexPage from "./pages/index-page";
+import SignInPage from "./pages/sign-in-page";
+import SignUpPage from "./pages/sign-up-page";
 
-function App() {
-  const isActive = false;
-
+function AuthLayout() {
   return (
     <div>
-      <Button>버튼</Button>
-
-      <div className={cn(isActive ? "text-green-500" : "text-red-500")}>
-        isActive
-      </div>
-      <div className="text-primary">Primary</div>
-      <div className="text-muted">Muted</div>
-      <div className="text-destructive">Destructive</div>
+      <header>Auth!</header>
+      <Outlet />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<IndexPage />} />
+
+      <Route element={<AuthLayout />}>
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
+      </Route>
+    </Routes>
   );
 }
 
