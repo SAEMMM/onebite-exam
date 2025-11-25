@@ -1,22 +1,9 @@
 import TodoEditor from "@/components/todo-list/todo-editor";
 import TodoItem from "@/components/todo-list/todo-item";
-import { API_URL } from "@/lib/constants";
-import type { Todo } from "@/types";
-import {useQuery} from "@tanstack/react-query"
-
-async function fetchTodos () {
-  const response = await fetch(`${API_URL}/todos`);
-  if (!response.ok) throw new Error("Fetch Failed");
-
-  const data: Todo[] = await response.json();
-  return data;
-}
+import { useTodosData } from "@/hooks/queries/use-todos.data";
 
 export default function TodoListPage() {
-  const {data:todos, isLoading, error} = useQuery({
-    queryFn: fetchTodos,
-    queryKey:["todos"],
-  })
+  const { data: todos, isLoading, error } = useTodosData();
 
   if (error) return <div>에러</div>
   if (isLoading) return <div>로딩중...</div>
